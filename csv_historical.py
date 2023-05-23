@@ -27,5 +27,5 @@ def merge_all_csv(csv_files_path: str, merged_path: str) -> None:
     csv_data = pd.concat(data_frames, ignore_index=True)
     csv_data.to_csv(merged_path, index=False)
 
-#unzip_all_files(downloaded_path, csv_path)
+unzip_all_files(downloaded_path, csv_path)
 merge_all_csv(csv_path, merged_path)
