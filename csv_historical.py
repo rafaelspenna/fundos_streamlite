@@ -14,14 +14,18 @@ def unzip_all_files(downloaded_path: str, output_path: str) -> None:
                 zip_ref.extractall(output_path)
 
 def merge_all_csv(csv_files_path: str, merged_path: str) -> None:
-    csv_data = pd.DataFrame()
+    data_frames = []
+    columns_to_read = ['CNPJ_FUNDO', 'DT_COMPTC', 'VL_TOTAL', 'VL_QUOTA', 'VL_PATRIM_LIQ', 'CAPTC_DIA', 'RESG_DIA', 'NR_COTST'] 
+    dtypes = {'CNPJ_FUNDO': 'str', 'DT_COMPTC': 'object', 'VL_TOTAL': 'float', 'VL_QUOTA': 'float',
+               'VL_PATRIM_LIQ': 'float', 'CAPTC_DIA': 'float', 'RESG_DIA': 'float', 'NR_COTST': 'Int64'}
     for file in os.listdir(csv_files_path):
         if file.endswith('.csv'):
             file_path = os.path.join(csv_files_path, file)
-            df = pd.read_csv(file_path, sep=';')
-            csv_data = pd.concat([csv_data, df])
-    
-    csv_data.to_csv(merged_path)
+            df = pd.read_csv(file_path, sep=';', usecols=columns_to_read, dtype=dtypes, 
+                             na_values='0', parse_dates=['DT_COMPTC'])
+            data_frames.append(df)
+    csv_data = pd.concat(data_frames, ignore_index=True)
+    csv_data.to_csv(merged_path, index=False)
 
 #unzip_all_files(downloaded_path, csv_path)
 merge_all_csv(csv_path, merged_path)
