@@ -28,4 +28,8 @@ def merge_all_csv(csv_files_path: str, merged_path: str) -> None:
     csv_data.to_csv(merged_path, index=False)
 
 unzip_all_files(downloaded_path, csv_path)
+<<<<<<< HEAD
 merge_all_csv(csv_path, merged_path)
+=======
+merge_all_csv(csv_path, merged_path)
+>>>>>>> fe641ee (Update csv_historical.py)
